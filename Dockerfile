@@ -1,12 +1,15 @@
 FROM centos:centos7
 
 
-ENV GRAAL_VERSION=20.0.0
+ARG GRAAL_VERSION=20.0.0
 ARG MAVEN_VERSION=3.6.3
+ARG VCS_REF
+ARG BUILD_DATE
 
-LABEL org.label-schema.name="maven-graalvm" \
-      org.label-schema.description="A docker image with GraalVM, JDK 1.8, Node, Maven and Git" \
-      org.label-schema.version=${GRAAL_VERSION} \
+LABEL org.opencontainers.image.title="unicornsquad/k8s-maven-graalvm" \
+      org.opencontainers.image.revision=$VCS_REF \
+      org.opencontainers.image.source="https://github.com/theunicornsquad/k8s-maven-graalvm" \
+      org.opencontainers.image.created=$BUILD_DATE \
       maintainer=pauloandresoares@gmail.com
 
 RUN yum update -y && \

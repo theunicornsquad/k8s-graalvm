@@ -2,7 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+      - 'v*'
   pull_request:
     branches: [ master ]
 
@@ -14,5 +16,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+    - name: Docker login
+      run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+
+    - name: Build docker image
+      run: GIT_BRANCH=${GITHUB_REF##*/} make docker_build
+
+    - name: Test docker image
+      run: GIT_BRANCH=${GITHUB_REF##*/} make test
+
+    - name: Push docker image
+      run: GIT_BRANCH=${GITHUB_REF##*/} make docker_push
