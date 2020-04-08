@@ -11,7 +11,7 @@ ifeq ($(GIT_BRANCH), master)
 else
 	TAG_VARS = $(subst -, ,$(GIT_BRANCH))
 
-	MAVEN_VERSION = $(word 1, $(TAG_VARS))
+	MAVEN_VERSION = $(subst v,,$(word 1, $(TAG_VARS)) )
 	GRAAL_VERSION = $(word 2, $(TAG_VARS))	
 
 	DOCKER_TAG = $(GIT_BRANCH)
