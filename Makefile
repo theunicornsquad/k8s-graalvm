@@ -15,11 +15,17 @@ else
 endif
 
 docker_build:
+
+
+	@echo "MAVEN VERSION: ${MAVEN_VERSION: 3.6.3}"
+
+	@echo "MAVEN GRAAL_VERSION: ${GRAAL_VERSION: 20.0.0}"
+
 	docker build \
 	  --build-arg VCS_REF=`git rev-parse --short HEAD` \
 	  --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
-	  --build-arg MAVEN_VERSION=${MAVEN_VERSION: 20.0.0} \
-	  --build-arg GRAAL_VERSION=${GRAAL_VERSION: 3.6.3} \
+	  --build-arg MAVEN_VERSION=${MAVEN_VERSION: 3.6.3} \
+	  --build-arg GRAAL_VERSION=${GRAAL_VERSION: 20.0.0} \
 	  -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
 	  
 docker_push:
